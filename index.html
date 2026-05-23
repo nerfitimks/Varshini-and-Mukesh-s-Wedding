@@ -4,8 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Varshini weds Mukesh 💍</title>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<!-- Firebase loads only on real hosting, not in preview -->
+<script>
+window.FIREBASE_READY = false;
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" onload="window.FIREBASE_READY=true"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -412,14 +416,17 @@ label{font-size:13px;font-weight:700;color:var(--text2);font-family:sans-serif;d
 const firebaseConfig = {
   apiKey: "AIzaSyCmoi9w7Ll0BveHWOk4stHzFmUFSJXnrhk",
   authDomain: "varshini-mukesh-wedding.firebaseapp.com",
-  databaseURL: "https://varshini-mukesh-wedding-default-rtdb.firebaseio.com",
+  databaseURL: "https://varshini-mukesh-wedding-default-rtdb.firebaseio.com/",
   projectId: "varshini-mukesh-wedding",
   storageBucket: "varshini-mukesh-wedding.firebasestorage.app",
   messagingSenderId: "70133493097",
   appId: "1:70133493097:web:d4579d41cd4aec7f9ba1f8"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+// Verify database connection explicitly
+if(window.FIREBASE_READY && typeof firebase !== 'undefined'){
+  firebase.initializeApp(firebaseConfig);
+} 
+const db = (window.FIREBASE_READY && typeof firebase !== 'undefined') ? firebase.database() : null;
 const ROOT = 'weddingPlanner';
 
 // ══════════════════════════════════════════
@@ -557,21 +564,16 @@ function setSyncStatus(status){
   else{bar.className='sync-bar offline';dot.style.background='#F87171';txt.textContent='🔴 Offline — reconnecting...';}
 }
 
-function fbSet(path, data){
-  setSyncStatus('syncing');
-  return db.ref(`${ROOT}/${path}`).set(data).then(()=>setSyncStatus('live')).catch(()=>setSyncStatus('offline'));
-}
-function fbRemove(path){
-  setSyncStatus('syncing');
-  return db.ref(`${ROOT}/${path}`).remove().then(()=>setSyncStatus('live')).catch(()=>setSyncStatus('offline'));
-}
+function fbSet(path,data){if(!db){console.log('offline mode');return Promise.resolve();}setSyncStatus('syncing');return db.ref(`${ROOT}/${path}`).set(data).then(()=>setSyncStatus('live')).catch(()=>setSyncStatus('offline'));}
+function fbRemove(path){if(!db){return Promise.resolve();}setSyncStatus('syncing');return db.ref(`${ROOT}/${path}`).remove().then(()=>setSyncStatus('live')).catch(()=>setSyncStatus('offline'));}
 
 function arrToObj(arr){const o={};arr.forEach(i=>o[i.id]=i);return o;}
 function objToArr(obj){return obj?Object.values(obj):[];}
 
 // Listen for live changes
 function startListening(){
-  db.ref(ROOT).on('value', snap=>{
+  if(!db){return;}
+  db.ref(ROOT).on('value',snap=>{
     const d=snap.val()||{};
     S.categories=objToArr(d.categories);
     S.tasks=objToArr(d.tasks);
@@ -590,15 +592,19 @@ function startListening(){
 }
 
 function seedFirebase(){
-  // Only seed if database is empty
+  if(!db){
+    // Preview mode — use seed data directly
+    S.categories=[...SEED_CATEGORIES];
+    S.tasks=makeSeedTasks();
+    S.events=[...SEED_EVENTS];
+    document.getElementById('loading').style.display='none';
+    setSyncStatus('offline');
+    renderAll();
+    return;
+  }
   db.ref(ROOT).once('value').then(snap=>{
     if(!snap.val()){
-      db.ref(ROOT).set({
-        categories:arrToObj(SEED_CATEGORIES),
-        tasks:arrToObj(makeSeedTasks()),
-        events:arrToObj(SEED_EVENTS),
-        discussions:{}
-      });
+      db.ref(ROOT).set({categories:arrToObj(SEED_CATEGORIES),tasks:arrToObj(makeSeedTasks()),events:arrToObj(SEED_EVENTS),discussions:{}});
     }
     startListening();
   });
@@ -830,5 +836,160 @@ function renderDiscussions(){
       <div class="mom-meta">📅 ${ds}${cat?` &nbsp;|&nbsp;<span class="badge badge-gold">📂 ${cat.name}</span>`:''} &nbsp;|&nbsp; <span style="display:inline-flex;align-items:center;gap:3px">${(d.people||[]).map(p=>getAvatar(p)).join('')} <span style="font-size:11px">${(d.people||[]).join(', ')||'—'}</span></span>
         <button class="btn btn-danger btn-sm" style="float:right;margin-top:-2px" onclick="deleteDiscussion('${d.id}')">🗑</button>
       </div>
-      <div style="font-size:14px;margin-bottom:${d.actions?'.3rem':'0'}"><b>Summary:
-...
+      <div style="font-size:14px;margin-bottom:${d.actions?'.3rem':'0'}"><b>Summary:</b> ${d.summary}</div>
+      ${d.actions?`<div style="font-size:14px"><b>Action Items:</b> ${d.actions}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// EVENTS
+// ══════════════════════════════════════════
+function saveEvent(){
+  const name=document.getElementById('ev-name').value.trim();if(!name)return alert('Enter event name');
+  const id=uid();
+  fbSet(`events/${id}`,{id,name,date:document.getElementById('ev-date').value,time:document.getElementById('ev-time').value,duration:document.getElementById('ev-duration').value.trim(),notes:document.getElementById('ev-notes').value.trim()});
+  closeModal('eventModal');
+  ['ev-name','ev-date','ev-time','ev-duration','ev-notes'].forEach(i=>document.getElementById(i).value='');
+}
+function deleteEvent(id){if(!confirm('Delete?'))return;fbRemove(`events/${id}`);}
+function renderEvents(){
+  const cont=document.getElementById('events-container');
+  if(!S.events.length){cont.innerHTML='<div class="card italic text-muted text-sm">No events yet.</div>';return;}
+  const byDate={};S.events.forEach(ev=>{if(!byDate[ev.date])byDate[ev.date]=[];byDate[ev.date].push(ev);});
+  const emojis=['🌸','🙏','💍','🎉','✨','🎊'];
+  cont.innerHTML=Object.keys(byDate).sort().map(date=>{
+    const ds=new Date(date+'T12:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+    const isWed=date==='2026-08-23';
+    return`<div style="margin-bottom:1.25rem">
+      <div style="font-weight:bold;font-family:sans-serif;font-size:14px;color:${isWed?'var(--red)':'var(--gold-dark)'};margin-bottom:.5rem;padding:.4rem .8rem;background:${isWed?'rgba(155,28,28,0.08)':'rgba(201,168,76,0.12)'};border-radius:8px;border-left:4px solid ${isWed?'var(--red)':'var(--gold)'}">
+        ${isWed?'💍':'📅'} ${ds}${isWed?' — Wedding Day!':''}
+      </div>
+      ${byDate[date].map((ev,i)=>`<div class="event-row">
+        <div class="event-num">${emojis[i]||'•'}</div>
+        <div>
+          <div class="event-name">${ev.name}</div>
+          <div class="event-time">⏰ ${ev.time?new Date('2000-01-01T'+ev.time).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true}):'TBD'}${ev.duration?' &nbsp;⏳ '+ev.duration:''}</div>
+          ${ev.notes?`<div style="font-size:12px;color:var(--text3);margin-top:2px">${ev.notes}</div>`:''}
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="deleteEvent('${ev.id}')">🗑</button>
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// CALENDAR
+// ══════════════════════════════════════════
+function renderCalendar(){
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-header').textContent=months[calMonth]+' '+calYear;
+  let html=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  const first=new Date(calYear,calMonth,1).getDay(),days=new Date(calYear,calMonth+1,0).getDate();
+  const evMap={};
+  [...S.tasks.filter(t=>t.due).map(t=>({date:t.due,label:t.name,type:'task'})),
+   ...S.events.filter(e=>e.date).map(e=>({date:e.date,label:e.name,type:'event'}))]
+  .forEach(e=>{if(!evMap[e.date])evMap[e.date]=[];evMap[e.date].push(e);});
+  for(let i=0;i<first;i++)html+=`<div></div>`;
+  for(let d=1;d<=days;d++){
+    const ds=`${calYear}-${pad(calMonth+1)}-${pad(d)}`;
+    const evs=evMap[ds]||[];
+    const isToday=today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
+    const isWed=calYear===2026&&calMonth===7&&d===23;
+    const cls='cal-day'+(isToday?' today':'')+(evs.length?' has-event':'')+(isWed?' wedding-day':'');
+    const tags=evs.slice(0,2).map(e=>`<span class="cal-event-tag" style="${e.type==='event'?'background:var(--gold-dark)':''}">${e.label}</span>`).join('');
+    const more=evs.length>2?`<span class="cal-event-tag" style="background:var(--text3)">+${evs.length-2}</span>`:'';
+    html+=`<div class="${cls}" onclick="showCalDay('${ds}')"><div class="cal-day-num" style="${isWed?'color:#FFF;font-weight:900':''}">${d}${isWed?'<br><span style="font-size:9px">💍</span>':''}</div>${tags}${more}</div>`;
+  }
+  document.getElementById('cal-grid').innerHTML=html;
+}
+function showCalDay(ds){
+  const evs=[...S.tasks.filter(t=>t.due===ds).map(t=>({label:'📋 '+t.name,detail:(t.assignees||[]).join(', ')||'—'})),...S.events.filter(e=>e.date===ds).map(e=>({label:'🎊 '+e.name,detail:e.time||''}))];
+  document.getElementById('cal-day-title').textContent=new Date(ds+'T12:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('cal-day-list').innerHTML=evs.length?evs.map(e=>`<div class="card" style="margin-bottom:.4rem;padding:.6rem 1rem"><div style="font-weight:700;font-family:sans-serif">${e.label}</div><div style="font-size:12px;color:var(--text3)">${e.detail}</div></div>`).join(''):'<div style="font-size:13px;color:var(--text3);font-style:italic">No events on this day.</div>';
+  document.getElementById('cal-day-events').style.display='block';
+}
+function calPrev(){if(calMonth===0){calMonth=11;calYear--;}else calMonth--;renderCalendar();}
+function calNext(){if(calMonth===11){calMonth=0;calYear++;}else calMonth++;renderCalendar();}
+
+// ══════════════════════════════════════════
+// BUDGET
+// ══════════════════════════════════════════
+function renderBudget(){
+  let tB=0,tA=0;S.categories.forEach(c=>{tB+=c.budget||0;});S.tasks.forEach(t=>{tA+=t.actual||0;});
+  const rem=tB-tA;
+  document.getElementById('b-total').textContent=fmt(tB);document.getElementById('b-actual').textContent=fmt(tA);
+  document.getElementById('b-rem').textContent=fmt(Math.abs(rem));document.getElementById('b-rem').className='sum-val '+(rem>=0?'green':'red');
+  document.getElementById('b-var').innerHTML=tB===0?'—':rem>=0?`<span class="under-label">Under by ${fmt(rem)}</span>`:`<span class="ovr-label">Over by ${fmt(Math.abs(rem))}</span>`;
+  document.getElementById('budget-cat-detail').innerHTML=S.categories.map(cat=>{
+    const tasks=S.tasks.filter(t=>t.catId===cat.id);
+    const actual=tasks.reduce((s,t)=>s+(t.actual||0),0),budget=cat.budget||0,rem=budget-actual,pct=budget?Math.min(100,Math.round(actual/budget*100)):0;
+    return`<div class="card">
+      <div class="flex-between"><div style="font-weight:bold;font-size:15px;font-family:sans-serif">📂 ${cat.name}</div>
+        <div>${budget===0?'<span class="badge badge-grey">No budget set</span>':rem>=0?`<span class="badge badge-green">Under ${fmt(rem)}</span>`:`<span class="badge badge-red">Over ${fmt(Math.abs(rem))}</span>`}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:.5rem 0;font-family:sans-serif;font-size:13px">
+        <div><div style="color:var(--text3)">Budget</div><div style="font-weight:700">${fmt(budget)}</div></div>
+        <div><div style="color:var(--text3)">Paid</div><div style="font-weight:700">${fmt(actual)}</div></div>
+        <div><div style="color:var(--text3)">Remaining</div><div style="font-weight:700;color:${rem>=0?'var(--green)':'#DC2626'}">${fmt(Math.abs(rem))}</div></div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:12px;color:var(--text3);font-family:sans-serif">${pct}% spent</div>
+      <div class="scroll-x" style="margin-top:.5rem">
+      <table class="task-table"><thead><tr><th>Task</th><th>Assignees</th><th>Budget</th><th>Actual</th><th>Variance</th><th>Status</th></tr></thead>
+      <tbody>${tasks.length===0?'<tr><td colspan="6" style="text-align:center;color:var(--text3);font-style:italic">No tasks</td></tr>':
+        tasks.map(t=>`<tr><td>${t.name}</td>
+          <td><div class="a-avatar-wrap">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}</div></td>
+          <td>${fmt(t.budget)}</td><td>${fmt(t.actual)}</td>
+          <td>${t.budget?(t.actual<=t.budget?`<span class="under-label">${fmt(t.budget-t.actual)}</span>`:`<span class="ovr-label">+${fmt(t.actual-t.budget)}</span>`):'—'}</td>
+          <td><span class="badge ${sbadge(t.status)}">${t.status}</span></td></tr>`).join('')}
+      </tbody></table></div>
+    </div>`;
+  }).join('')||'<div class="card italic text-muted text-sm">No categories yet.</div>';
+}
+
+// ══════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard(){
+  let tB=0,tA=0;S.categories.forEach(c=>{tB+=c.budget||0;});S.tasks.forEach(t=>{tA+=t.actual||0;});
+  const rem=tB-tA;
+  document.getElementById('db-budget').textContent=fmt(tB);document.getElementById('db-paid').textContent=fmt(tA);
+  document.getElementById('db-remaining').textContent=fmt(Math.abs(rem));document.getElementById('db-remaining').className='sum-val '+(rem>=0?'green':'red');
+  document.getElementById('db-variance').innerHTML=tB===0?'—':rem>=0?`<span class="under-label">Under ${fmt(rem)}</span>`:`<span class="ovr-label">Over ${fmt(Math.abs(rem))}</span>`;
+  const all=S.tasks,done=all.filter(t=>t.status==='Done').length,prog=all.filter(t=>t.status==='In Progress').length;
+  document.getElementById('db-total').textContent=all.length;document.getElementById('db-done').textContent=done;
+  document.getElementById('db-prog').textContent=prog;document.getElementById('db-pend').textContent=all.filter(t=>t.status==='Pending').length;
+  const tp=all.length?Math.round(done/all.length*100):0,bp=tB?Math.min(100,Math.round(tA/tB*100)):0;
+  document.getElementById('db-task-bar').style.width=tp+'%';document.getElementById('db-budget-bar').style.width=bp+'%';
+  document.getElementById('task-pct-lbl').textContent=tp+'%';document.getElementById('bud-pct-lbl').textContent=bp+'%';
+  document.getElementById('cat-budget-list').innerHTML=S.categories.map(cat=>{
+    const actual=S.tasks.filter(t=>t.catId===cat.id).reduce((s,t)=>s+(t.actual||0),0);
+    const budget=cat.budget||0,pct=budget?Math.min(100,Math.round(actual/budget*100)):0;
+    return`<div style="margin-bottom:.6rem"><div style="display:flex;justify-content:space-between;font-size:13px;font-family:sans-serif;margin-bottom:2px"><span style="font-weight:700">${cat.name}</span><span style="color:var(--text3)">${fmt(actual)} / ${fmt(budget)} (${pct}%)</span></div><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div></div>`;
+  }).join('')||'<div style="font-size:13px;color:var(--text3);font-style:italic">No categories yet.</div>';
+  const now=new Date();
+  const upcoming=S.tasks.filter(t=>t.due&&t.status!=='Done').map(t=>({...t,dd:new Date(t.due+'T12:00:00')})).filter(t=>t.dd>=now).sort((a,b)=>a.dd-b.dd).slice(0,6);
+  document.getElementById('upcoming-tasks').innerHTML=upcoming.length?upcoming.map(t=>{
+    const days=Math.ceil((t.dd-now)/86400000);const urg=days<=7?'badge-red':days<=14?'badge-orange':'badge-blue';
+    return`<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:.5rem">
+      <div><div style="font-weight:700;font-size:14px;font-family:sans-serif">${t.name}</div>
+      <div style="display:flex;align-items:center;gap:4px;margin-top:2px">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}<span style="font-size:12px;color:var(--text3);margin-left:4px">${(t.assignees||[]).join(', ')||'—'}</span></div></div>
+      <span class="badge ${urg}">${days}d left</span>
+    </div>`;
+  }).join(''):'<div style="font-size:13px;color:var(--text3);font-style:italic">All tasks on track! 🎉</div>';
+}
+
+function renderAll(){
+  renderDashboard();renderTasks();renderDiscussions();renderEvents();renderBudget();renderCalendar();renderFamilyGrid();syncCatSelects();
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+db.ref('.info/connected').on('value',snap=>{setSyncStatus(snap.val()?'live':'offline');});
+seedFirebase();
+renderFamilyGrid();
+</script>
+</body>
+</html>
