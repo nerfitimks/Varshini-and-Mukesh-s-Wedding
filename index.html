@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Varshini weds Mukesh 💍</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9A84C;--gold-light:#F0D080;--gold-dark:#8B6914;
+  --red:#9B1C1C;--red-light:#FEF2F2;--cream:#FFF8F0;
+  --bg:#FFFBF4;--card:#FFFFFF;--border:#E8D5B0;
+  --text:#2D1A0E;--text2:#6B4226;--text3:#A07850;
+  --green:#166534;--green-bg:#DCFCE7;
+  --orange:#C2410C;--orange-bg:#FFF7ED;
+  --blue:#1E40AF;--blue-bg:#EFF6FF;
+  --shadow:0 2px 12px rgba(150,100,30,0.12);
+}
+body{font-family:'Georgia',serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;
+  background-image:url('https://static.wixstatic.com/media/1a8e04_142f46e64efc4c8fb0653ff94f049023~mv2.png/v1/fit/w_960,h_720,q_90,enc_avif,quality_auto/1a8e04_142f46e64efc4c8fb0653ff94f049023~mv2.png');
+  background-attachment:fixed;background-size:cover;background-position:center;background-blend-mode:normal;}
+body::before{content:'';position:fixed;inset:0;background:rgba(255,248,240,0.93);pointer-events:none;z-index:0;}
+body>*{position:relative;z-index:1;}
+
+/* HERO */
+.hero{
+  min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  position:relative;overflow:hidden;color:#FFF;
+}
+.hero-bg{position:absolute;inset:0;background-image:url('https://static.wixstatic.com/media/1a8e04_e7c4a7bc4779434295f2b371bbc5ab55f003.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/1a8e04_e7c4a7bc4779434295f2b371bbc5ab55f003.jpg');background-size:cover;background-position:center;filter:brightness(0.38);}
+.hero-pattern{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(201,168,76,0.08) 0,rgba(201,168,76,0.08) 1px,transparent 0,transparent 50%);background-size:22px 22px;}
+.hero-content{position:relative;z-index:2;padding:2.5rem 1rem 2rem;}
+.hero-subtitle{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold-light);margin-bottom:.6rem;font-family:sans-serif;}
+.hero-names{font-size:clamp(2.2rem,6vw,4.2rem);font-weight:bold;color:#FFF;text-shadow:0 2px 24px rgba(0,0,0,.5);line-height:1.1;margin-bottom:.4rem;}
+.hero-amp{color:var(--gold-light);font-style:italic;}
+.hero-date{font-size:1.05rem;color:var(--gold-light);margin-top:.4rem;font-family:sans-serif;letter-spacing:2px;}
+.hero-venue{font-size:.9rem;color:rgba(255,255,255,.82);font-family:sans-serif;margin-top:.25rem;}
+.hero-divider{width:120px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-light),transparent);margin:.8rem auto;}
+
+/* COUPLE PHOTO */
+.couple-frame{width:130px;height:130px;border-radius:50%;border:4px solid var(--gold-light);object-fit:cover;margin:.75rem auto 0;display:block;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+
+/* COUNTDOWN */
+.countdown-bar{background:var(--red);color:#FFF;padding:.9rem 1rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;align-items:center;}
+.cd-unit{text-align:center;min-width:52px;}
+.cd-num{font-size:1.8rem;font-weight:bold;line-height:1;display:block;font-family:sans-serif;}
+.cd-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.85;font-family:sans-serif;}
+.cd-sep{font-size:1.6rem;font-weight:bold;opacity:.5;align-self:flex-start;margin-top:4px;}
+
+/* PALACE STRIP */
+.palace-strip{display:flex;gap:0;overflow:hidden;height:90px;}
+.palace-strip img{flex:1;object-fit:cover;filter:brightness(0.75) sepia(0.3);}
+
+/* NAV */
+nav{background:rgba(255,250,244,0.97);border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;overflow-x:auto;backdrop-filter:blur(6px);}
+.nav-inner{display:flex;gap:0;min-width:max-content;padding:0 .5rem;}
+nav button{background:none;border:none;padding:.7rem 1rem;cursor:pointer;font-size:14px;font-family:sans-serif;font-weight:700;color:var(--text2);border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;}
+nav button:hover,nav button.active{color:var(--red);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.section{display:none;padding:1.5rem 1rem 3rem;max-width:1100px;margin:0 auto;}
+.section.active{display:block;}
+.section-title{font-size:1.5rem;font-weight:bold;color:var(--red);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem;border-bottom:2px solid var(--gold-light);padding-bottom:.5rem;}
+
+/* FAMILY GRID */
+.family-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-bottom:1.5rem;}
+.family-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:.6rem .4rem;text-align:center;box-shadow:var(--shadow);}
+.family-avatar{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);display:block;margin:0 auto .4rem;background:#f5e8d0;}
+.family-name{font-size:11px;font-weight:700;font-family:sans-serif;color:var(--text2);line-height:1.2;}
+.family-role{font-size:10px;color:var(--text3);font-family:sans-serif;}
+
+/* SHARED */
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#FFF;border:none;padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-size:14px;font-family:sans-serif;font-weight:700;transition:opacity .2s;}
+.btn:hover{opacity:.85;}
+.btn-sm{padding:.3rem .7rem;font-size:12px;border-radius:6px;}
+.btn-outline{background:transparent;color:var(--red);border:2px solid var(--red);}
+.btn-outline:hover{background:var(--red-light);}
+.btn-gold{background:var(--gold-dark);color:#FFF;}
+.btn-danger{background:#DC2626;color:#FFF;}
+input,select,textarea{font-family:sans-serif;font-size:14px;border:1.5px solid var(--border);border-radius:7px;padding:.45rem .7rem;width:100%;background:#FFF;color:var(--text);outline:none;}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);}
+label{font-size:13px;font-weight:700;color:var(--text2);font-family:sans-serif;display:block;margin-bottom:3px;}
+.card{background:rgba(255,255,255,0.96);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;box-shadow:var(--shadow);}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;font-family:sans-serif;white-space:nowrap;}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-red{background:#FEE2E2;color:#DC2626;}
+.badge-orange{background:var(--orange-bg);color:var(--orange);}
+.badge-blue{background:var(--blue-bg);color:var(--blue);}
+.badge-gold{background:#FEF9C3;color:#92400E;}
+.badge-grey{background:#F3F4F6;color:#374151;}
+
+/* SUMMARY */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:1.5rem;}
+.sum-card{background:rgba(255,255,255,0.95);border:1.5px solid var(--border);border-radius:10px;padding:1rem;text-align:center;box-shadow:var(--shadow);}
+.sum-label{font-size:11px;color:var(--text3);font-family:sans-serif;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
+.sum-val{font-size:1.35rem;font-weight:bold;font-family:sans-serif;}
+.sum-val.green{color:var(--green);}
+.sum-val.red{color:#DC2626;}
+.sum-val.gold{color:var(--gold-dark);}
+
+/* TASKS */
+.cat-header{background:linear-gradient(90deg,var(--red) 0%,#7B1A1A 100%);color:#FFF;border-radius:10px 10px 0 0;padding:.8rem 1.1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;cursor:pointer;}
+.cat-title{font-size:1rem;font-weight:bold;font-family:sans-serif;}
+.cat-stats{display:flex;gap:8px;font-size:12px;font-family:sans-serif;flex-wrap:wrap;align-items:center;}
+.cat-stat{background:rgba(255,255,255,.15);padding:2px 8px;border-radius:12px;}
+.task-table{width:100%;border-collapse:collapse;font-size:13px;font-family:sans-serif;}
+.task-table th{background:#FFF3E0;color:var(--text2);font-weight:700;padding:7px 8px;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;}
+.task-table td{padding:7px 8px;border-bottom:1px solid #F0E6D0;vertical-align:middle;}
+.task-table tr:hover td{background:#FFFBF4;}
+.task-table tr.done td{opacity:.6;}
+
+/* ASSIGNEE AVATARS in tasks */
+.a-avatar{width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);display:inline-block;margin-right:-6px;vertical-align:middle;background:#f5e8d0;}
+.a-avatar-wrap{display:inline-flex;flex-wrap:wrap;gap:2px;}
+
+/* DISCUSSION */
+.mom-card{border-left:4px solid var(--gold);padding:.8rem 1rem;background:rgba(255,251,240,0.97);border-radius:0 10px 10px 0;margin-bottom:.75rem;}
+.mom-meta{font-size:12px;color:var(--text3);font-family:sans-serif;margin-bottom:.3rem;}
+
+/* CALENDAR */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;font-family:sans-serif;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-dow{text-align:center;font-size:12px;font-weight:700;color:var(--text3);padding:4px 0;font-family:sans-serif;}
+.cal-day{min-height:52px;background:rgba(255,255,255,0.92);border:1px solid var(--border);border-radius:7px;padding:4px 5px;cursor:pointer;transition:background .15s;}
+.cal-day:hover{background:var(--cream);}
+.cal-day.today{border:2px solid var(--gold);}
+.cal-day.has-event{background:#FEF9C3;}
+.cal-day.wedding-day{background:var(--red)!important;color:#FFF!important;}
+.cal-day-num{font-size:13px;font-weight:700;font-family:sans-serif;}
+.cal-event-tag{font-size:9px;background:var(--red);color:#FFF;border-radius:4px;padding:1px 3px;display:block;margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:sans-serif;}
+
+/* EVENTS */
+.event-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:rgba(255,255,255,0.95);border:1.5px solid var(--border);border-radius:10px;padding:.8rem 1rem;margin-bottom:.6rem;box-shadow:var(--shadow);}
+.event-num{width:34px;height:34px;border-radius:50%;background:var(--red);color:#FFF;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;font-family:sans-serif;flex-shrink:0;}
+.event-name{font-weight:bold;font-size:15px;font-family:sans-serif;}
+.event-time{font-size:12px;color:var(--text3);font-family:sans-serif;}
+
+/* PROGRESS */
+.progress-bar-wrap{background:#F0E6D0;border-radius:20px;height:14px;margin:4px 0 8px;overflow:hidden;}
+.progress-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--gold-dark),var(--red));transition:width .5s;}
+
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px;}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:1rem;}
+.modal.open{display:flex;}
+.modal-box{background:var(--card);border-radius:14px;padding:1.5rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border:2px solid var(--gold);}
+.modal-title{font-size:1.15rem;font-weight:bold;color:var(--red);margin-bottom:1rem;font-family:sans-serif;}
+.ovr-label{color:#DC2626;font-weight:bold;}
+.under-label{color:var(--green);font-weight:bold;}
+.assignee-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.assignee-check{display:none;}
+.assignee-label{background:#F5EDD0;color:var(--gold-dark);border:1.5px solid var(--border);border-radius:20px;font-size:12px;padding:3px 10px;cursor:pointer;font-family:sans-serif;font-weight:700;transition:all .15s;user-select:none;}
+.assignee-check:checked+.assignee-label{background:var(--red);color:#FFF;border-color:var(--red);}
+.flex-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem;}
+.mt1{margin-top:.75rem;}
+.gap-r{display:flex;gap:8px;flex-wrap:wrap;}
+.italic{font-style:italic;}
+.text-sm{font-size:13px;font-family:sans-serif;}
+.text-muted{color:var(--text3);}
+.scroll-x{overflow-x:auto;}
+@media(max-width:600px){
+  .hero-names{font-size:1.9rem;}
+  .task-table{font-size:12px;}
+  .task-table th,.task-table td{padding:5px;}
+  .form-grid{grid-template-columns:1fr;}
+  .family-grid{grid-template-columns:repeat(auto-fill,minmax(75px,1fr));}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO with Agaram Palace background -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-subtitle">✦ A Grand Chettinad Celebration ✦</div>
+    <div class="hero-names">Varshini <span class="hero-amp">&amp;</span> Mukesh</div>
+    <div class="hero-divider"></div>
+    <div class="hero-date">📅 21 – 23 August 2026</div>
+    <div class="hero-venue">🏛️ Agaram Palace — The Grand Chettinad Experience, Chennai</div>
+    <div style="margin-top:.6rem">
+      <label style="display:inline-block;padding:.4rem 1.1rem;border-radius:20px;font-size:12px;font-weight:700;color:var(--gold-light);border:1.5px dashed var(--gold-light);cursor:pointer;background:rgba(0,0,0,.25);">
+        📷 Upload couple photo
+        <input type="file" accept="image/*" style="display:none" onchange="uploadCover(event)"/>
+      </label>
+    </div>
+    <div id="coverWrap" style="display:none;margin-top:.75rem;">
+      <img id="coverImg" class="couple-frame" alt="Varshini & Mukesh"/>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-bar">
+  <span style="font-family:sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;opacity:.85">💍 COUNTDOWN TO VARSHINI & MUKESH'S WEDDING</span>
+  <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><span class="cd-label">days</span></div>
+  <span class="cd-sep">:</span>
+  <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><span class="cd-label">hours</span></div>
+  <span class="cd-sep">:</span>
+  <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><span class="cd-label">mins</span></div>
+  <span class="cd-sep">:</span>
+  <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><span class="cd-label">secs</span></div>
+</div>
+
+<!-- AGARAM PALACE PHOTO STRIP -->
+<div class="palace-strip">
+  <img src="https://static.wixstatic.com/media/1a8e04_142f46e64efc4c8fb0653ff94f049023~mv2.png/v1/fit/w_960,h_720,q_90,enc_avif,quality_auto/1a8e04_142f46e64efc4c8fb0653ff94f049023~mv2.png" alt="Agaram Palace"/>
+  <img src="https://static.wixstatic.com/media/1a8e04_1044ee668d62462499f76d6c8d42c0e4~mv2.jpg/v1/fit/w_960,h_717,q_90,enc_avif,quality_auto/1a8e04_1044ee668d62462499f76d6c8d42c0e4~mv2.jpg" alt="Agaram Palace Hall"/>
+  <img src="https://static.wixstatic.com/media/1a8e04_41ee6b47fadb4040806b8f4f4a0445c9f003.jpg/v1/fit/w_960,h_541,q_90,enc_avif,quality_auto/1a8e04_41ee6b47fadb4040806b8f4f4a0445c9f003.jpg" alt="Agaram Palace Interior"/>
+  <img src="https://static.wixstatic.com/media/1a8e04_95bdde7012e541868170403d95c48c42~mv2.jpg/v1/fit/w_960,h_1199,q_90,enc_avif,quality_auto/1a8e04_95bdde7012e541868170403d95c48c42~mv2.jpg" alt="Agaram Palace Courtyard"/>
+</div>
+
+<!-- NAV -->
+<nav><div class="nav-inner">
+  <button class="active" onclick="showTab('dashboard',this)">🏠 Dashboard</button>
+  <button onclick="showTab('family',this)">👨‍👩‍👧‍👦 Our Family</button>
+  <button onclick="showTab('tasks',this)">✅ To-Do List</button>
+  <button onclick="showTab('discussions',this)">💬 Discussions</button>
+  <button onclick="showTab('calendar',this)">📅 Calendar</button>
+  <button onclick="showTab('events',this)">🎊 Wedding Events</button>
+  <button onclick="showTab('budget',this)">💰 Budget</button>
+</div></nav>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div class="section active" id="sec-dashboard">
+  <div class="section-title">🌸 Wedding Dashboard</div>
+  <div class="summary-grid">
+    <div class="sum-card"><div class="sum-label">Total Budget</div><div class="sum-val gold" id="db-budget">₹0</div></div>
+    <div class="sum-card"><div class="sum-label">Paid / Actuals</div><div class="sum-val gold" id="db-paid">₹0</div></div>
+    <div class="sum-card"><div class="sum-label">Remaining</div><div class="sum-val" id="db-remaining">₹0</div></div>
+    <div class="sum-card"><div class="sum-label">Over / Under</div><div class="sum-val" id="db-variance">—</div></div>
+    <div class="sum-card"><div class="sum-label">Total Tasks</div><div class="sum-val gold" id="db-total">0</div></div>
+    <div class="sum-card"><div class="sum-label">Completed ✅</div><div class="sum-val green" id="db-done">0</div></div>
+    <div class="sum-card"><div class="sum-label">In Progress 🔄</div><div class="sum-val gold" id="db-prog">0</div></div>
+    <div class="sum-card"><div class="sum-label">Pending ⏳</div><div class="sum-val red" id="db-pend">0</div></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:bold;font-size:15px;font-family:sans-serif;margin-bottom:.75rem;color:var(--red)">📊 Overall Progress</div>
+    <div style="font-family:sans-serif;font-size:13px;color:var(--text2);margin-bottom:2px">Task Completion <span id="task-pct-lbl" style="float:right;font-weight:700"></span></div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="db-task-bar" style="width:0%"></div></div>
+    <div style="font-family:sans-serif;font-size:13px;color:var(--text2);margin-bottom:2px">Budget Spent <span id="bud-pct-lbl" style="float:right;font-weight:700"></span></div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="db-budget-bar" style="width:0%"></div></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:bold;font-size:15px;font-family:sans-serif;margin-bottom:.75rem;color:var(--red)">📂 Budget by Category</div>
+    <div id="cat-budget-list"></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:bold;font-size:15px;font-family:sans-serif;margin-bottom:.75rem;color:var(--red)">🔔 Upcoming Due Dates</div>
+    <div id="upcoming-tasks"></div>
+  </div>
+</div>
+
+<!-- ═══ FAMILY ═══ -->
+<div class="section" id="sec-family">
+  <div class="section-title">👨‍👩‍👧‍👦 Our Family</div>
+  <div class="card" style="margin-bottom:1.25rem;">
+    <div style="font-weight:bold;font-size:14px;font-family:sans-serif;color:var(--red);margin-bottom:.75rem;">💍 The Couple & Families — Engagement Day</div>
+    <img id="familyPhoto" src="" style="width:100%;max-height:380px;object-fit:cover;border-radius:10px;border:2px solid var(--gold);display:none;" alt="Family Photo"/>
+    <div style="margin-top:.75rem;font-family:sans-serif;font-size:13px;color:var(--text3);font-style:italic;text-align:center" id="familyPhotoHint">Upload the engagement group photo to display here</div>
+    <div style="margin-top:.6rem;text-align:center">
+      <label style="display:inline-block;padding:.4rem 1rem;border-radius:20px;font-size:12px;font-weight:700;color:var(--gold-dark);border:1.5px solid var(--gold);cursor:pointer;background:rgba(201,168,76,0.1);">
+        📷 Upload group photo
+        <input type="file" accept="image/*" style="display:none" onchange="uploadFamily(event)"/>
+      </label>
+    </div>
+  </div>
+  <div style="font-weight:bold;font-size:15px;font-family:sans-serif;color:var(--red);margin-bottom:.75rem;">🌸 Meet the Team</div>
+  <div class="family-grid" id="family-grid"></div>
+  <div class="card" style="background:linear-gradient(135deg,rgba(155,28,28,0.06),rgba(201,168,76,0.08));border-color:var(--gold);">
+    <div style="font-weight:bold;font-size:14px;font-family:sans-serif;color:var(--red);margin-bottom:.5rem;">🏛️ About the Venue</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <img src="https://static.wixstatic.com/media/1a8e04_0cf367348d234fbab363fec205aa21a9~mv2.jpg/v1/fit/w_480,h_600,q_90,enc_avif,quality_auto/1a8e04_0cf367348d234fbab363fec205aa21a9~mv2.jpg" style="width:100%;height:120px;object-fit:cover;border-radius:8px;" alt="Agaram Palace"/>
+      <img src="https://static.wixstatic.com/media/1a8e04_91191bf264744e70b7b4cbaf8864cd48~mv2.png/v1/fit/w_480,h_361,q_90,enc_avif,quality_auto/1a8e04_91191bf264744e70b7b4cbaf8864cd48~mv2.png" style="width:100%;height:120px;object-fit:cover;border-radius:8px;" alt="Agaram Palace"/>
+    </div>
+    <div style="font-family:sans-serif;font-size:13px;color:var(--text2);margin-top:.75rem;line-height:1.6;">
+      <strong>Agaram Palace — The Grand Chettinad Experience</strong><br/>
+      Nallathannikulam, South Street, Agaram Main Road, Chennai – 600126<br/>
+      9,200 sq. ft. of beautifully designed space across two levels on a 28,000 sq. ft. site. Spacious courtyards, ornate pillars, vibrant Athangudi tile work, and intricate woodwork — a living celebration of Chettinad heritage.<br/>
+      📞 +91-7358629504 &nbsp;|&nbsp; <a href="https://www.agarampalace.com" style="color:var(--red)">agarampalace.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TASKS ═══ -->
+<div class="section" id="sec-tasks">
+  <div class="flex-between">
+    <div class="section-title" style="margin-bottom:0">✅ Category To-Do List</div>
+    <button class="btn btn-gold" onclick="openModal('catModal')">+ Add Category</button>
+  </div>
+  <div id="categories-container"></div>
+</div>
+
+<!-- ═══ DISCUSSIONS ═══ -->
+<div class="section" id="sec-discussions">
+  <div class="flex-between">
+    <div class="section-title" style="margin-bottom:0">💬 Discussion Notes (MOM)</div>
+    <button class="btn btn-gold" onclick="openMOMModal('')">+ Add Discussion</button>
+  </div>
+  <div style="margin-bottom:1rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <label style="margin:0;font-size:13px;font-family:sans-serif;display:flex;align-items:center;gap:6px">Filter:
+      <select id="mom-cat-filter" onchange="renderDiscussions()" style="width:auto;padding:.3rem .5rem;font-size:13px"><option value="">All Categories</option></select>
+    </label>
+  </div>
+  <div id="discussions-container"></div>
+</div>
+
+<!-- ═══ CALENDAR ═══ -->
+<div class="section" id="sec-calendar">
+  <div class="section-title">📅 Calendar</div>
+  <div class="cal-nav">
+    <button class="btn btn-outline btn-sm" onclick="calPrev()">← Prev</button>
+    <span id="cal-header" style="font-size:1.1rem;font-weight:bold;font-family:sans-serif;color:var(--red)"></span>
+    <button class="btn btn-outline btn-sm" onclick="calNext()">Next →</button>
+  </div>
+  <div class="cal-grid" id="cal-grid"></div>
+  <div id="cal-day-events" class="card mt1" style="display:none">
+    <div style="font-weight:bold;font-family:sans-serif;margin-bottom:.5rem" id="cal-day-title"></div>
+    <div id="cal-day-list"></div>
+  </div>
+</div>
+
+<!-- ═══ EVENTS ═══ -->
+<div class="section" id="sec-events">
+  <div class="flex-between">
+    <div class="section-title" style="margin-bottom:0">🎊 Wedding Events</div>
+    <button class="btn btn-gold" onclick="openModal('eventModal')">+ Add Event</button>
+  </div>
+  <div id="events-container"></div>
+</div>
+
+<!-- ═══ BUDGET ═══ -->
+<div class="section" id="sec-budget">
+  <div class="section-title">💰 Budget Overview</div>
+  <div class="summary-grid">
+    <div class="sum-card"><div class="sum-label">Total Budget</div><div class="sum-val gold" id="b-total">₹0</div></div>
+    <div class="sum-card"><div class="sum-label">Actuals Paid</div><div class="sum-val gold" id="b-actual">₹0</div></div>
+    <div class="sum-card"><div class="sum-label">Remaining</div><div class="sum-val" id="b-rem">₹0</div></div>
+    <div class="sum-card"><div class="sum-label">Variance</div><div class="sum-val" id="b-var">—</div></div>
+  </div>
+  <div id="budget-cat-detail"></div>
+</div>
+
+<!-- MODALS -->
+<div class="modal" id="catModal"><div class="modal-box">
+  <div class="modal-title">➕ New Category</div>
+  <div class="form-grid">
+    <div><label>Category Name</label><input id="cat-name" placeholder="e.g. Photography"/></div>
+    <div><label>Budget (₹)</label><input id="cat-budget" type="number" placeholder="0"/></div>
+  </div>
+  <div class="gap-r mt1"><button class="btn" onclick="addCategory()">Save</button><button class="btn btn-outline" onclick="closeModal('catModal')">Cancel</button></div>
+</div></div>
+
+<div class="modal" id="taskModal"><div class="modal-box">
+  <div class="modal-title" id="task-modal-title">➕ New Task</div>
+  <input type="hidden" id="task-id"/><input type="hidden" id="task-cat-id"/>
+  <div class="form-grid">
+    <div style="grid-column:1/-1"><label>Task Description</label><input id="task-name" placeholder="Describe the task"/></div>
+    <div><label>Due Date</label><input id="task-due" type="date"/></div>
+    <div><label>Budget (₹)</label><input id="task-budget" type="number" placeholder="0"/></div>
+    <div><label>Actuals Paid (₹)</label><input id="task-actual" type="number" placeholder="0"/></div>
+    <div><label>Status</label><select id="task-status"><option value="Pending">Pending</option><option value="In Progress">In Progress</option><option value="Done">Done</option></select></div>
+  </div>
+  <div><label>Assignees</label><div class="assignee-grid" id="task-assignees-grid"></div></div>
+  <div class="mt1"><label>Remarks</label><textarea id="task-remarks" rows="2" placeholder="Any notes..."></textarea></div>
+  <div class="gap-r mt1"><button class="btn" onclick="saveTask()">Save</button><button class="btn btn-outline" onclick="closeModal('taskModal')">Cancel</button></div>
+</div></div>
+
+<div class="modal" id="momModal"><div class="modal-box">
+  <div class="modal-title">📝 Add Discussion / MOM</div>
+  <div class="form-grid">
+    <div><label>Date</label><input id="mom-date" type="date"/></div>
+    <div><label>Category</label><select id="mom-cat"><option value="">— General —</option></select></div>
+  </div>
+  <div class="mt1"><label>Discussion Summary</label><textarea id="mom-summary" rows="4" placeholder="What was discussed..."></textarea></div>
+  <div class="mt1"><label>People Involved</label><div class="assignee-grid" id="mom-people-grid"></div></div>
+  <div class="mt1"><label>Action Items</label><textarea id="mom-actions" rows="2" placeholder="Follow-up actions..."></textarea></div>
+  <div class="gap-r mt1"><button class="btn" onclick="saveMOM()">Save</button><button class="btn btn-outline" onclick="closeModal('momModal')">Cancel</button></div>
+</div></div>
+
+<div class="modal" id="eventModal"><div class="modal-box">
+  <div class="modal-title">🎊 Add Wedding Event</div>
+  <div class="form-grid">
+    <div><label>Event Name</label><input id="ev-name" placeholder="e.g. Muhurtham"/></div>
+    <div><label>Date</label><input id="ev-date" type="date"/></div>
+    <div><label>Time</label><input id="ev-time" type="time"/></div>
+    <div><label>Duration</label><input id="ev-duration" placeholder="e.g. 2 hours"/></div>
+  </div>
+  <div class="mt1"><label>Notes</label><textarea id="ev-notes" rows="2"></textarea></div>
+  <div class="gap-r mt1"><button class="btn" onclick="saveEvent()">Save</button><button class="btn btn-outline" onclick="closeModal('eventModal')">Cancel</button></div>
+</div></div>
+
+<div class="modal" id="editCatModal"><div class="modal-box">
+  <div class="modal-title">✏️ Edit Category</div>
+  <input type="hidden" id="edit-cat-id"/>
+  <div class="form-grid">
+    <div><label>Category Name</label><input id="edit-cat-name"/></div>
+    <div><label>Budget (₹)</label><input id="edit-cat-budget" type="number"/></div>
+  </div>
+  <div class="gap-r mt1"><button class="btn" onclick="updateCategory()">Update</button><button class="btn btn-outline" onclick="closeModal('editCatModal')">Cancel</button></div>
+</div></div>
+
+<script>
+// ── FAMILY DATA with face positions from group photo ──
+// We'll crop the engagement photo using canvas to extract each person's face
+// Photo order L→R: Pavithra, Ajeetha(MukeshAmma), Sivakumar(MukeshAppa), Mukesh, Varshini, Jayasree(VarshiniAmma), Ananth(VarshiniAppa), Ajay, Shanmathi
+// Approximate % positions in a 1365x910 image
+const FAMILY=[
+  {name:'Varshini',    role:'Bride 👰',          color:'#9B1C1C', cx:34.5, cy:18, cw:11},
+  {name:'Mukesh',      role:'Groom 🤵',           color:'#7B2D00', cx:25.5, cy:16, cw:11},
+  {name:'Varshini Amma',role:"Bride's Mother",    color:'#6B4226', cx:43.5, cy:18, cw:11},
+  {name:'Varshini Appa',role:"Bride's Father",    color:'#5B3A29', cx:50.5, cy:17, cw:11},
+  {name:'Mukesh Amma', role:"Groom's Mother",     color:'#7B2D00', cx:16.5, cy:18, cw:11},
+  {name:'Mukesh Appa', role:"Groom's Father",     color:'#6B4226', cx:8.5,  cy:17, cw:11},
+  {name:'Ajay',        role:"Bride's Brother",    color:'#8B4513', cx:60.5, cy:16, cw:11},
+  {name:'Shanma',      role:"Bride's Sister-in-Law",color:'#A07850',cx:68.5,cy:18, cw:11},
+  {name:'Pavi',        role:"Groom's Sister",     color:'#9B1C1C', cx:1.5,  cy:18, cw:11},
+  {name:'Santhanu',    role:'Friend',             color:'#4B5563', cx:50,   cy:50, cw:10},
+];
+const ASSIGNEES=FAMILY.map(f=>f.name);
+const WEDDING=new Date('2026-08-23T09:00:00');
+const today=new Date();
+let calYear=today.getFullYear(),calMonth=today.getMonth();
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const pad=n=>String(n).padStart(2,'0');
+const fmt=n=>(!n&&n!==0)?'—':'₹'+Number(n).toLocaleString('en-IN');
+const fmtDate=s=>s?new Date(s+'T12:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'}):'—';
+
+// Cropped face canvases stored here
+const faceDataURLs={};
+let groupImgEl=null;
+
+function cropFaces(imgEl){
+  groupImgEl=imgEl;
+  const iw=imgEl.naturalWidth,ih=imgEl.naturalHeight;
+  FAMILY.forEach(f=>{
+    const canvas=document.createElement('canvas');
+    canvas.width=80;canvas.height=80;
+    const ctx=canvas.getContext('2d');
+    ctx.beginPath();ctx.arc(40,40,40,0,Math.PI*2);ctx.clip();
+    // cx/cy = percent of image, cw = percent width of face crop
+    const faceW=iw*(f.cw/100);
+    const faceH=faceW; // square crop
+    const sx=iw*(f.cx/100)-faceW/2;
+    const sy=ih*(f.cy/100);
+    ctx.drawImage(imgEl,sx,sy,faceW,faceH,0,0,80,80);
+    faceDataURLs[f.name]=canvas.toDataURL();
+  });
+  renderFamilyGrid();
+  renderTasks();
+}
+
+function getAvatar(name){
+  if(faceDataURLs[name])return`<img class="a-avatar" src="${faceDataURLs[name]}" title="${name}" alt="${name}"/>`;
+  const f=FAMILY.find(x=>x.name===name);
+  const initials=name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  const bg=f?f.color:'#9B1C1C';
+  return`<span class="a-avatar" style="background:${bg};display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#FFF;font-family:sans-serif;">${initials}</span>`;
+}
+
+function renderFamilyGrid(){
+  const grid=document.getElementById('family-grid');
+  if(!grid)return;
+  grid.innerHTML=FAMILY.filter(f=>f.name!=='Santhanu').map(f=>{
+    const av=faceDataURLs[f.name]?`<img class="family-avatar" src="${faceDataURLs[f.name]}" alt="${f.name}"/>`:
+      `<div class="family-avatar" style="background:${f.color};display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;color:#FFF;font-family:sans-serif;">${f.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>`;
+    return`<div class="family-card">${av}<div class="family-name">${f.name}</div><div class="family-role">${f.role}</div></div>`;
+  }).join('');
+}
+
+// ── SEED DATA ──
+const SEED_CATEGORIES=[
+  {id:'cat-venue',name:'Venue & Logistics',budget:485000},
+  {id:'cat-food', name:'Food & Catering',  budget:1100000},
+  {id:'cat-decor',name:'Décor & Ambience', budget:200000},
+  {id:'cat-beauty',name:'Beauty & Grooming',budget:117500},
+  {id:'cat-photo',name:'Photography & E-invite',budget:250000},
+  {id:'cat-invite',name:'Invitations',     budget:20000},
+  {id:'cat-attire',name:'Attire & Jewellery',budget:250000},
+  {id:'cat-sasthri',name:'Sasthrigal & Rituals',budget:100000},
+  {id:'cat-entertain',name:'Entertainment',budget:150000},
+  {id:'cat-gifts',name:'Return Gifts',     budget:82000},
+  {id:'cat-misc',name:'Miscellaneous',     budget:101500},
+];
+const SEED_TASKS=[
+  {id:uid(),catId:'cat-venue',name:'Book hall and gazebo at Agaram Palace for Aug 21 (Mehendi)',due:'2026-07-01',budget:425000,actual:0,status:'Pending',assignees:['Varshini Appa'],remarks:'Hall booking for Mehendi on Aug 21'},
+  {id:uid(),catId:'cat-venue',name:'Tower AC vendor — get quote and book',due:'2026-05-31',budget:30000,actual:0,status:'Pending',assignees:['Varshini','Mukesh'],remarks:''},
+  {id:uid(),catId:'cat-venue',name:'Mobile toilet and bathroom vendor — get quote and book',due:'2026-05-31',budget:30000,actual:0,status:'Pending',assignees:['Varshini','Mukesh'],remarks:''},
+  {id:uid(),catId:'cat-venue',name:'Party hall rent',due:'2026-07-01',budget:1500,actual:0,status:'Pending',assignees:['Varshini Appa'],remarks:''},
+  {id:uid(),catId:'cat-venue',name:'Rooms for guests — book accommodation',due:'2026-07-01',budget:100000,actual:0,status:'Pending',assignees:['Varshini Appa','Varshini Amma'],remarks:''},
+  {id:uid(),catId:'cat-venue',name:'Transportation arrangements',due:'2026-07-15',budget:50000,actual:0,status:'Pending',assignees:['Mukesh Appa'],remarks:''},
+  {id:uid(),catId:'cat-venue',name:'Rented vessels — confirm vendor',due:'2026-06-15',budget:7000,actual:0,status:'Pending',assignees:['Varshini Amma'],remarks:''},
+  {id:uid(),catId:'cat-food',name:'Caterers — decide and finalise',due:'2026-06-15',budget:1100000,actual:0,status:'In Progress',assignees:['Varshini Appa','Varshini Amma'],remarks:'Shortlist vendors and confirm menu'},
+  {id:uid(),catId:'cat-decor',name:'Decoration — finalise vendor (Vaibogam being considered)',due:'2026-07-31',budget:200000,actual:0,status:'Pending',assignees:['Ajay','Varshini','Mukesh'],remarks:'Vaibogam is the preferred vendor'},
+  {id:uid(),catId:'cat-beauty',name:'Makeup artist — book Bhavana after trial',due:'2026-05-31',budget:100000,actual:0,status:'In Progress',assignees:['Varshini'],remarks:'Trial to be done first before booking'},
+  {id:uid(),catId:'cat-beauty',name:'Mehendi artist — book',due:'2026-04-13',budget:15000,actual:0,status:'Done',assignees:['Varshini'],remarks:'Completed'},
+  {id:uid(),catId:'cat-beauty',name:'Nail artist — find new vendor (check Bhuvi\'s artist)',due:'2026-05-19',budget:2500,actual:0,status:'Pending',assignees:['Varshini'],remarks:'Get Bhuvi\'s nail artist contact'},
+  {id:uid(),catId:'cat-beauty',name:'Makeup trial',due:'2026-07-31',budget:0,actual:0,status:'Pending',assignees:['Varshini'],remarks:'July'},
+  {id:uid(),catId:'cat-photo',name:'Photography — finalise Camraw',due:'2026-04-30',budget:250000,actual:0,status:'Done',assignees:['Varshini','Mukesh'],remarks:'Completed — Camraw confirmed'},
+  {id:uid(),catId:'cat-photo',name:'E-invite — check with Camraw for preparation',due:'2026-06-20',budget:0,actual:0,status:'Pending',assignees:['Mukesh'],remarks:''},
+  {id:uid(),catId:'cat-invite',name:'Invitation design — finalise',due:'2026-05-31',budget:20000,actual:0,status:'Pending',assignees:['Varshini','Varshini Amma','Varshini Appa'],remarks:''},
+  {id:uid(),catId:'cat-invite',name:'Invitation design — send for print',due:'2026-06-15',budget:0,actual:0,status:'Pending',assignees:['Varshini','Varshini Amma','Varshini Appa'],remarks:''},
+  {id:uid(),catId:'cat-invite',name:'Invitation — give to Kuladheiva Kovil and Madam',due:'2026-06-15',budget:0,actual:0,status:'Pending',assignees:['Varshini Appa','Varshini Amma'],remarks:''},
+  {id:uid(),catId:'cat-invite',name:'Invitation distribution — start',due:'2026-07-01',budget:0,actual:0,status:'Pending',assignees:['Varshini Appa','Varshini Amma'],remarks:''},
+  {id:uid(),catId:'cat-invite',name:'Invitation distribution — complete',due:'2026-07-15',budget:0,actual:0,status:'Pending',assignees:['Varshini Appa','Varshini Amma'],remarks:''},
+  {id:uid(),catId:'cat-attire',name:'Wedding sarees — select and purchase',due:'2026-06-30',budget:100000,actual:0,status:'Pending',assignees:['Varshini','Varshini Amma','Varshini Appa','Mukesh Amma','Mukesh Appa'],remarks:'June'},
+  {id:uid(),catId:'cat-attire',name:'Dress for family members',due:'2026-06-30',budget:50000,actual:0,status:'Pending',assignees:['Varshini Amma','Mukesh Amma'],remarks:''},
+  {id:uid(),catId:'cat-attire',name:'Dress for others',due:'2026-06-30',budget:100000,actual:0,status:'Pending',assignees:['Varshini Amma','Mukesh Amma'],remarks:''},
+  {id:uid(),catId:'cat-attire',name:'Blouses — stitch',due:'2026-07-31',budget:0,actual:0,status:'Pending',assignees:['Varshini'],remarks:'June–July'},
+  {id:uid(),catId:'cat-attire',name:'Jewellery — select for rentals',due:'2026-07-31',budget:0,actual:0,status:'Pending',assignees:['Varshini'],remarks:'July'},
+  {id:uid(),catId:'cat-sasthri',name:'Sasthrigal — confirm and finalise',due:'2026-06-30',budget:100000,actual:0,status:'Pending',assignees:['Varshini Appa'],remarks:''},
+  {id:uid(),catId:'cat-sasthri',name:'Order of events — check and confirm',due:'2026-05-31',budget:0,actual:0,status:'Pending',assignees:['Mukesh'],remarks:''},
+  {id:uid(),catId:'cat-sasthri',name:'Mukesh side rituals — check and confirm with family',due:'2026-05-31',budget:0,actual:0,status:'Pending',assignees:['Mukesh'],remarks:''},
+  {id:uid(),catId:'cat-entertain',name:'DJ — enquire Ajay\'s wedding vendor',due:'2026-05-18',budget:150000,actual:0,status:'Pending',assignees:['Ajay','Varshini','Mukesh'],remarks:''},
+  {id:uid(),catId:'cat-gifts',name:'Return gifts — finalise and order (bride side)',due:'2026-07-01',budget:42000,actual:0,status:'Pending',assignees:['Varshini Amma','Mukesh Amma'],remarks:'₹42,000'},
+  {id:uid(),catId:'cat-gifts',name:'Return gifts — finalise and order (groom side)',due:'2026-07-01',budget:40000,actual:0,status:'Pending',assignees:['Mukesh Amma'],remarks:'₹40,000'},
+  {id:uid(),catId:'cat-gifts',name:'Thaali — confirm and arrange',due:'2026-07-15',budget:0,actual:0,status:'Pending',assignees:['Mukesh Appa','Varshini Appa'],remarks:'Budget TBD'},
+  {id:uid(),catId:'cat-misc',name:'Miscellaneous expenses — budget reserve',due:'2026-08-01',budget:100000,actual:0,status:'Pending',assignees:['Varshini Appa'],remarks:'Buffer for unexpected expenses'},
+  {id:uid(),catId:'cat-misc',name:'Rented vessels',due:'2026-07-01',budget:1500,actual:0,status:'Pending',assignees:['Varshini Amma'],remarks:''},
+];
+const SEED_EVENTS=[
+  {id:'ev1',name:'Mehendi',date:'2026-08-21',time:'13:00',duration:'',notes:'Afternoon — Hall & gazebo at Agaram Palace'},
+  {id:'ev2',name:'Viradham & Nandhi',date:'2026-08-22',time:'09:00',duration:'',notes:'Morning ceremony'},
+  {id:'ev3',name:'Engagement',date:'2026-08-22',time:'13:00',duration:'',notes:'Afternoon'},
+  {id:'ev4',name:'Reception',date:'2026-08-22',time:'18:00',duration:'',notes:'Evening'},
+  {id:'ev5',name:'Wedding',date:'2026-08-23',time:'07:00',duration:'',notes:'Morning — Main wedding ceremony at Agaram Palace'},
+  {id:'ev6',name:'After Party',date:'2026-08-23',time:'19:00',duration:'',notes:'Evening'},
+];
+
+let S={categories:[],tasks:[],discussions:[],events:[],coverImg:null,familyImg:null};
+function save(){try{localStorage.setItem('vmwed26',JSON.stringify(S));}catch(e){}}
+function load(){try{const d=localStorage.getItem('vmwed26');if(d){S=JSON.parse(d);return true;}}catch(e){}return false;}
+function seedIfEmpty(){
+  if(!S.categories.length)S.categories=[...SEED_CATEGORIES];
+  if(!S.tasks.length)S.tasks=[...SEED_TASKS];
+  S.events=[...SEED_EVENTS];
+  save();
+}
+
+// COUNTDOWN
+function tick(){
+  const diff=WEDDING-new Date();
+  if(diff<=0){document.querySelector('.countdown-bar').innerHTML='<b style="font-family:sans-serif;font-size:1.3rem">🎉 Congratulations Varshini & Mukesh! 🎉</b>';return;}
+  const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);
+  document.getElementById('cd-d').textContent=pad(d);document.getElementById('cd-h').textContent=pad(h);
+  document.getElementById('cd-m').textContent=pad(m);document.getElementById('cd-s').textContent=pad(s);
+}
+setInterval(tick,1000);tick();
+
+// NAV
+function showTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  ({tasks:renderTasks,discussions:renderDiscussions,calendar:renderCalendar,events:renderEvents,budget:renderBudget,dashboard:renderDashboard,family:renderFamilyGrid})[id]?.();
+}
+
+// MODALS
+function openModal(id){
+  if(id==='momModal')buildGrid('mom-people-grid');
+  if(id==='taskModal')buildGrid('task-assignees-grid');
+  syncCatSelects();
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
+
+function buildGrid(gId,selected=[]){
+  const g=document.getElementById(gId);if(!g)return;
+  g.innerHTML=ASSIGNEES.map(a=>{
+    const id2=gId+a.replace(/\s/g,'');
+    const av=faceDataURLs[a]?`<img src="${faceDataURLs[a]}" style="width:20px;height:20px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:4px;"/>`:''
+    return`<span><input class="assignee-check" type="checkbox" id="${id2}" value="${a}"${selected.includes(a)?' checked':''}><label class="assignee-label" for="${id2}">${av}${a}</label></span>`;
+  }).join('');
+}
+function getChecked(gId){return[...document.querySelectorAll('#'+gId+' .assignee-check:checked')].map(c=>c.value);}
+function syncCatSelects(){
+  ['mom-cat','mom-cat-filter'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const cur=el.value;
+    el.innerHTML=(id==='mom-cat-filter'?'<option value="">All Categories</option>':'<option value="">— General —</option>')+S.categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    el.value=cur;
+  });
+}
+
+// AUTO-LOAD embedded engagement photo
+const ENGAGEMENT_IMG_URL = 'https://i.imgur.com/placeholder.jpg'; // will use base64 below
+
+function autoLoadFamilyPhoto(){
+  // Use the uploaded engagement photo as a base64 embedded image
+  const imgEl = document.getElementById('familyPhoto');
+  imgEl.crossOrigin = 'anonymous';
+  imgEl.onload = () => {
+    imgEl.style.display = 'block';
+    document.getElementById('familyPhotoHint').style.display = 'none';
+    cropFaces(imgEl);
+    S.familyImg = null; // don't re-store huge base64 — we re-crop on load
+    save();
+  };
+  imgEl.onerror = () => {}; // silent fail, user can upload manually
+}
+
+// COVER & FAMILY PHOTO
+function uploadCover(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{S.coverImg=ev.target.result;save();
+    document.getElementById('coverImg').src=ev.target.result;
+    document.getElementById('coverWrap').style.display='block';
+  };r.readAsDataURL(f);
+}
+function uploadFamily(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    S.familyImg=ev.target.result;save();
+    const imgEl=document.getElementById('familyPhoto');
+    imgEl.src=ev.target.result;imgEl.style.display='block';
+    document.getElementById('familyPhotoHint').style.display='none';
+    imgEl.onload=()=>cropFaces(imgEl);
+  };r.readAsDataURL(f);
+}
+
+// CATEGORIES
+function addCategory(){
+  const name=document.getElementById('cat-name').value.trim();
+  const budget=parseFloat(document.getElementById('cat-budget').value)||0;
+  if(!name)return alert('Enter a category name');
+  S.categories.push({id:uid(),name,budget});
+  save();closeModal('catModal');
+  document.getElementById('cat-name').value='';document.getElementById('cat-budget').value='';
+  renderTasks();syncCatSelects();renderDashboard();
+}
+function openEditCat(id){
+  const c=S.categories.find(x=>x.id===id);if(!c)return;
+  document.getElementById('edit-cat-id').value=id;document.getElementById('edit-cat-name').value=c.name;document.getElementById('edit-cat-budget').value=c.budget;
+  openModal('editCatModal');
+}
+function updateCategory(){
+  const id=document.getElementById('edit-cat-id').value;const c=S.categories.find(x=>x.id===id);if(!c)return;
+  c.name=document.getElementById('edit-cat-name').value.trim();c.budget=parseFloat(document.getElementById('edit-cat-budget').value)||0;
+  save();closeModal('editCatModal');renderTasks();syncCatSelects();renderDashboard();renderBudget();
+}
+function deleteCategory(id){
+  if(!confirm('Delete this category and all its tasks?'))return;
+  S.categories=S.categories.filter(c=>c.id!==id);S.tasks=S.tasks.filter(t=>t.catId!==id);
+  save();renderTasks();renderDashboard();renderBudget();
+}
+
+// TASKS
+function openAddTask(catId){
+  document.getElementById('task-id').value='';document.getElementById('task-cat-id').value=catId;
+  document.getElementById('task-modal-title').textContent='➕ New Task';
+  buildGrid('task-assignees-grid');
+  ['task-name','task-due','task-budget','task-actual','task-remarks'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('task-status').value='Pending';
+  openModal('taskModal');
+}
+function openEditTask(id){
+  const t=S.tasks.find(x=>x.id===id);if(!t)return;
+  document.getElementById('task-id').value=id;document.getElementById('task-cat-id').value=t.catId;
+  document.getElementById('task-modal-title').textContent='✏️ Edit Task';
+  document.getElementById('task-name').value=t.name;document.getElementById('task-due').value=t.due||'';
+  document.getElementById('task-budget').value=t.budget||'';document.getElementById('task-actual').value=t.actual||'';
+  document.getElementById('task-status').value=t.status;document.getElementById('task-remarks').value=t.remarks||'';
+  buildGrid('task-assignees-grid',t.assignees||[]);
+  openModal('taskModal');
+}
+function saveTask(){
+  const id=document.getElementById('task-id').value;
+  const name=document.getElementById('task-name').value.trim();if(!name)return alert('Enter task description');
+  const obj={id:id||uid(),catId:document.getElementById('task-cat-id').value,name,
+    due:document.getElementById('task-due').value,
+    budget:parseFloat(document.getElementById('task-budget').value)||0,
+    actual:parseFloat(document.getElementById('task-actual').value)||0,
+    status:document.getElementById('task-status').value,
+    assignees:getChecked('task-assignees-grid'),
+    remarks:document.getElementById('task-remarks').value.trim()};
+  if(id){const i=S.tasks.findIndex(x=>x.id===id);if(i>=0)S.tasks[i]=obj;}else S.tasks.push(obj);
+  save();closeModal('taskModal');renderTasks();renderDashboard();renderBudget();
+}
+function deleteTask(id){if(!confirm('Delete this task?'))return;S.tasks=S.tasks.filter(t=>t.id!==id);save();renderTasks();renderDashboard();renderBudget();}
+function sbadge(s){return s==='Done'?'badge-green':s==='In Progress'?'badge-orange':'badge-blue';}
+
+function renderTasks(){
+  const cont=document.getElementById('categories-container');
+  if(!S.categories.length){cont.innerHTML='<div class="card italic text-muted text-sm">No categories yet.</div>';return;}
+  cont.innerHTML=S.categories.map(cat=>{
+    const tasks=S.tasks.filter(t=>t.catId===cat.id);
+    const totalA=tasks.reduce((s,t)=>s+(t.actual||0),0);
+    const budget=cat.budget||0;const rem=budget-totalA;
+    const done=tasks.filter(t=>t.status==='Done').length;
+    const vb=budget===0?'':rem<0?`<span class="badge badge-red">⚠ Overrun ${fmt(Math.abs(rem))}</span>`:rem>0?`<span class="badge badge-green">✓ Under ${fmt(rem)}</span>`:`<span class="badge badge-blue">On Budget</span>`;
+    const rows=tasks.length===0?`<tr><td colspan="8" style="text-align:center;padding:1rem;color:var(--text3);font-style:italic">No tasks yet.</td></tr>`:
+      tasks.map(t=>`<tr class="${t.status==='Done'?'done':''}">
+        <td style="max-width:200px">${t.name}</td>
+        <td><div class="a-avatar-wrap">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}</div><div style="font-size:10px;color:var(--text3);font-family:sans-serif;margin-top:2px">${(t.assignees||[]).join(', ')||'—'}</div></td>
+        <td>${fmtDate(t.due)}</td>
+        <td>${fmt(t.budget)}</td><td>${fmt(t.actual)}</td>
+        <td>${t.budget?(t.actual<=t.budget?`<span class="under-label">${fmt(t.budget-t.actual)}</span>`:`<span class="ovr-label">+${fmt(t.actual-t.budget)}</span>`):'—'}</td>
+        <td><span class="badge ${sbadge(t.status)}">${t.status}</span></td>
+        <td><div class="gap-r"><button class="btn btn-outline btn-sm" onclick="openEditTask('${t.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteTask('${t.id}')">🗑</button></div>${t.remarks?`<div class="text-sm text-muted" style="margin-top:3px">${t.remarks}</div>`:''}</td>
+      </tr>`).join('');
+    return`<div class="card" style="padding:0;overflow:hidden;margin-bottom:1.25rem">
+      <div class="cat-header" onclick="toggleCat('cb-${cat.id}')">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="cat-title">📂 ${cat.name}</span>${vb}</div>
+        <div class="cat-stats"><span class="cat-stat">Budget: ${fmt(budget)}</span><span class="cat-stat">Paid: ${fmt(totalA)}</span><span class="cat-stat">${done}/${tasks.length} done</span><span>▼</span></div>
+      </div>
+      <div id="cb-${cat.id}" style="padding:1rem">
+        <div class="scroll-x"><table class="task-table">
+          <thead><tr><th>Task</th><th>Assignees</th><th>Due Date</th><th>Budget</th><th>Actuals</th><th>Rem/Overrun</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table></div>
+        <div class="gap-r" style="margin-top:.75rem">
+          <button class="btn btn-sm" onclick="openAddTask('${cat.id}')">+ Add Task</button>
+          <button class="btn btn-gold btn-sm" onclick="openMOMModal('${cat.id}')">+ Add Discussion</button>
+          <button class="btn btn-outline btn-sm" onclick="openEditCat('${cat.id}')">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteCategory('${cat.id}')">🗑 Delete</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleCat(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==='none'?'block':'';}
+
+// DISCUSSIONS
+function openMOMModal(catId){
+  buildGrid('mom-people-grid');syncCatSelects();
+  document.getElementById('mom-cat').value=catId||'';
+  document.getElementById('mom-summary').value='';document.getElementById('mom-actions').value='';
+  document.getElementById('mom-date').value=new Date().toISOString().split('T')[0];
+  openModal('momModal');
+}
+function saveMOM(){
+  const summary=document.getElementById('mom-summary').value.trim();if(!summary)return alert('Enter discussion summary');
+  S.discussions.push({id:uid(),date:document.getElementById('mom-date').value,catId:document.getElementById('mom-cat').value||'',summary,people:getChecked('mom-people-grid'),actions:document.getElementById('mom-actions').value.trim()});
+  save();closeModal('momModal');renderDiscussions();
+}
+function deleteDiscussion(id){if(!confirm('Delete?'))return;S.discussions=S.discussions.filter(d=>d.id!==id);save();renderDiscussions();}
+function renderDiscussions(){
+  syncCatSelects();
+  const filter=document.getElementById('mom-cat-filter').value;
+  const list=[...S.discussions].filter(d=>!filter||d.catId===filter).sort((a,b)=>b.date.localeCompare(a.date));
+  const cont=document.getElementById('discussions-container');
+  if(!list.length){cont.innerHTML='<div class="card italic text-muted text-sm">No discussions yet.</div>';return;}
+  cont.innerHTML=list.map(d=>{
+    const cat=S.categories.find(c=>c.id===d.catId);
+    const ds=d.date?new Date(d.date+'T12:00:00').toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'long',year:'numeric'}):'Unknown date';
+    const avatars=(d.people||[]).map(p=>getAvatar(p)).join('');
+    return`<div class="mom-card">
+      <div class="mom-meta">📅 ${ds}${cat?` &nbsp;|&nbsp;<span class="badge badge-gold">📂 ${cat.name}</span>`:''}
+        &nbsp;|&nbsp; ${avatars} <span style="font-size:11px">${(d.people||[]).join(', ')||'—'}</span>
+        <button class="btn btn-danger btn-sm" style="float:right;margin-top:-2px" onclick="deleteDiscussion('${d.id}')">🗑</button>
+      </div>
+      <div style="font-size:14px;margin-bottom:${d.actions?'.3rem':'0'}"><b>Summary:</b> ${d.summary}</div>
+      ${d.actions?`<div style="font-size:14px"><b>Action Items:</b> ${d.actions}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// EVENTS
+function saveEvent(){
+  const name=document.getElementById('ev-name').value.trim();if(!name)return alert('Enter event name');
+  S.events.push({id:uid(),name,date:document.getElementById('ev-date').value,time:document.getElementById('ev-time').value,duration:document.getElementById('ev-duration').value.trim(),notes:document.getElementById('ev-notes').value.trim()});
+  S.events.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  save();closeModal('eventModal');renderEvents();renderCalendar();
+  ['ev-name','ev-date','ev-time','ev-duration','ev-notes'].forEach(id=>document.getElementById(id).value='');
+}
+function deleteEvent(id){if(!confirm('Delete?'))return;S.events=S.events.filter(e=>e.id!==id);save();renderEvents();renderCalendar();}
+function renderEvents(){
+  const cont=document.getElementById('events-container');
+  if(!S.events.length){cont.innerHTML='<div class="card italic text-muted text-sm">No events yet.</div>';return;}
+  // Group by date
+  const byDate={};S.events.forEach(ev=>{if(!byDate[ev.date])byDate[ev.date]=[];byDate[ev.date].push(ev);});
+  cont.innerHTML=Object.keys(byDate).sort().map(date=>{
+    const ds=new Date(date+'T12:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+    const isWed=date==='2026-08-23';
+    return`<div style="margin-bottom:1.25rem">
+      <div style="font-weight:bold;font-family:sans-serif;font-size:14px;color:${isWed?'var(--red)':'var(--gold-dark)'};margin-bottom:.5rem;padding:.4rem .8rem;background:${isWed?'rgba(155,28,28,0.08)':'rgba(201,168,76,0.12)'};border-radius:8px;border-left:4px solid ${isWed?'var(--red)':'var(--gold)'}">
+        ${isWed?'💍 ':'📅 '}${ds}${isWed?' — Wedding Day!':''}
+      </div>
+      ${byDate[date].map((ev,i)=>`<div class="event-row">
+        <div class="event-num">${['🌸','🙏','💍','🎉','✨','🎊'][i]||'•'}</div>
+        <div>
+          <div class="event-name">${ev.name}</div>
+          <div class="event-time">⏰ ${ev.time?new Date('2000-01-01T'+ev.time).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true}):'TBD'}${ev.duration?' &nbsp;⏳ '+ev.duration:''}</div>
+          ${ev.notes?`<div class="text-sm text-muted" style="margin-top:2px">${ev.notes}</div>`:''}
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="deleteEvent('${ev.id}')">🗑</button>
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// CALENDAR
+function renderCalendar(){
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-header').textContent=months[calMonth]+' '+calYear;
+  const grid=document.getElementById('cal-grid');
+  let html=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  const first=new Date(calYear,calMonth,1).getDay(),days=new Date(calYear,calMonth+1,0).getDate();
+  const evMap={};
+  [...S.tasks.filter(t=>t.due).map(t=>({date:t.due,label:t.name,type:'task'})),
+   ...S.events.filter(e=>e.date).map(e=>({date:e.date,label:e.name,type:'event'}))]
+  .forEach(e=>{if(!evMap[e.date])evMap[e.date]=[];evMap[e.date].push(e);});
+  for(let i=0;i<first;i++)html+=`<div></div>`;
+  for(let d=1;d<=days;d++){
+    const ds=`${calYear}-${pad(calMonth+1)}-${pad(d)}`;
+    const evs=evMap[ds]||[];
+    const isToday=today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
+    const isWed=calYear===2026&&calMonth===7&&d===23;
+    const cls='cal-day'+(isToday?' today':'')+(evs.length?' has-event':'')+(isWed?' wedding-day':'');
+    const tags=evs.slice(0,2).map(e=>`<span class="cal-event-tag" style="${e.type==='event'?'background:var(--gold-dark)':''}">${e.label}</span>`).join('');
+    const more=evs.length>2?`<span class="cal-event-tag" style="background:var(--text3)">+${evs.length-2}</span>`:'';
+    html+=`<div class="${cls}" onclick="showCalDay('${ds}')"><div class="cal-day-num" style="${isWed?'color:#FFF;font-weight:900':''}">${d}${isWed?'<br><span style="font-size:9px">💍</span>':''}</div>${tags}${more}</div>`;
+  }
+  grid.innerHTML=html;
+}
+function showCalDay(ds){
+  const evs=[...S.tasks.filter(t=>t.due===ds).map(t=>({label:'📋 '+t.name,detail:(t.assignees||[]).join(', ')||'—'})),...S.events.filter(e=>e.date===ds).map(e=>({label:'🎊 '+e.name,detail:e.time||''}))];
+  document.getElementById('cal-day-title').textContent=new Date(ds+'T12:00:00').toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('cal-day-list').innerHTML=evs.length?evs.map(e=>`<div class="card" style="margin-bottom:.4rem;padding:.6rem 1rem"><div style="font-weight:700;font-family:sans-serif">${e.label}</div><div class="text-sm text-muted">${e.detail}</div></div>`).join(''):'<div class="text-sm text-muted italic">No events on this day.</div>';
+  document.getElementById('cal-day-events').style.display='block';
+}
+function calPrev(){if(calMonth===0){calMonth=11;calYear--;}else calMonth--;renderCalendar();}
+function calNext(){if(calMonth===11){calMonth=0;calYear++;}else calMonth++;renderCalendar();}
+
+// BUDGET
+function renderBudget(){
+  let tB=0,tA=0;S.categories.forEach(c=>{tB+=c.budget||0;});S.tasks.forEach(t=>{tA+=t.actual||0;});
+  const rem=tB-tA;
+  document.getElementById('b-total').textContent=fmt(tB);document.getElementById('b-actual').textContent=fmt(tA);
+  document.getElementById('b-rem').textContent=fmt(Math.abs(rem));document.getElementById('b-rem').className='sum-val '+(rem>=0?'green':'red');
+  document.getElementById('b-var').innerHTML=tB===0?'—':rem>=0?`<span class="under-label">Under by ${fmt(rem)}</span>`:`<span class="ovr-label">Over by ${fmt(Math.abs(rem))}</span>`;
+  document.getElementById('budget-cat-detail').innerHTML=S.categories.map(cat=>{
+    const tasks=S.tasks.filter(t=>t.catId===cat.id);
+    const actual=tasks.reduce((s,t)=>s+(t.actual||0),0),budget=cat.budget||0,rem=budget-actual,pct=budget?Math.min(100,Math.round(actual/budget*100)):0;
+    return`<div class="card">
+      <div class="flex-between"><div style="font-weight:bold;font-size:15px;font-family:sans-serif">📂 ${cat.name}</div>
+        <div>${budget===0?'<span class="badge badge-grey">No budget set</span>':rem>=0?`<span class="badge badge-green">Under ${fmt(rem)}</span>`:`<span class="badge badge-red">Over ${fmt(Math.abs(rem))}</span>`}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:.5rem 0;font-family:sans-serif;font-size:13px">
+        <div><div class="text-muted">Budget</div><div style="font-weight:700">${fmt(budget)}</div></div>
+        <div><div class="text-muted">Paid</div><div style="font-weight:700">${fmt(actual)}</div></div>
+        <div><div class="text-muted">Remaining</div><div style="font-weight:700;color:${rem>=0?'var(--green)':'#DC2626'}">${fmt(Math.abs(rem))}</div></div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+      <div class="text-sm text-muted">${pct}% spent</div>
+      <div class="scroll-x" style="margin-top:.5rem">
+      <table class="task-table"><thead><tr><th>Task</th><th>Assignees</th><th>Budget</th><th>Actual</th><th>Variance</th><th>Status</th></tr></thead>
+      <tbody>${tasks.length===0?'<tr><td colspan="6" style="text-align:center;color:var(--text3);font-style:italic">No tasks</td></tr>':
+        tasks.map(t=>`<tr><td>${t.name}</td>
+          <td><div class="a-avatar-wrap">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}</div></td>
+          <td>${fmt(t.budget)}</td><td>${fmt(t.actual)}</td>
+          <td>${t.budget?(t.actual<=t.budget?`<span class="under-label">${fmt(t.budget-t.actual)}</span>`:`<span class="ovr-label">+${fmt(t.actual-t.budget)}</span>`):'—'}</td>
+          <td><span class="badge ${sbadge(t.status)}">${t.status}</span></td></tr>`).join('')}
+      </tbody></table></div>
+    </div>`;
+  }).join('')||'<div class="card italic text-muted text-sm">No categories yet.</div>';
+}
+
+// DASHBOARD
+function renderDashboard(){
+  let tB=0,tA=0;S.categories.forEach(c=>{tB+=c.budget||0;});S.tasks.forEach(t=>{tA+=t.actual||0;});
+  const rem=tB-tA;
+  document.getElementById('db-budget').textContent=fmt(tB);document.getElementById('db-paid').textContent=fmt(tA);
+  document.getElementById('db-remaining').textContent=fmt(Math.abs(rem));document.getElementById('db-remaining').className='sum-val '+(rem>=0?'green':'red');
+  document.getElementById('db-variance').innerHTML=tB===0?'—':rem>=0?`<span class="under-label">Under ${fmt(rem)}</span>`:`<span class="ovr-label">Over ${fmt(Math.abs(rem))}</span>`;
+  const all=S.tasks,done=all.filter(t=>t.status==='Done').length,prog=all.filter(t=>t.status==='In Progress').length;
+  document.getElementById('db-total').textContent=all.length;document.getElementById('db-done').textContent=done;
+  document.getElementById('db-prog').textContent=prog;document.getElementById('db-pend').textContent=all.filter(t=>t.status==='Pending').length;
+  const tp=all.length?Math.round(done/all.length*100):0,bp=tB?Math.min(100,Math.round(tA/tB*100)):0;
+  document.getElementById('db-task-bar').style.width=tp+'%';document.getElementById('db-budget-bar').style.width=bp+'%';
+  document.getElementById('task-pct-lbl').textContent=tp+'%';document.getElementById('bud-pct-lbl').textContent=bp+'%';
+  document.getElementById('cat-budget-list').innerHTML=S.categories.map(cat=>{
+    const actual=S.tasks.filter(t=>t.catId===cat.id).reduce((s,t)=>s+(t.actual||0),0);
+    const budget=cat.budget||0,pct=budget?Math.min(100,Math.round(actual/budget*100)):0;
+    return`<div style="margin-bottom:.6rem"><div style="display:flex;justify-content:space-between;font-size:13px;font-family:sans-serif;margin-bottom:2px"><span style="font-weight:700">${cat.name}</span><span class="text-muted">${fmt(actual)} / ${fmt(budget)} (${pct}%)</span></div><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div></div>`;
+  }).join('')||'<div class="text-sm text-muted italic">No categories yet.</div>';
+  const now=new Date();
+  const upcoming=S.tasks.filter(t=>t.due&&t.status!=='Done').map(t=>({...t,dd:new Date(t.due+'T12:00:00')})).filter(t=>t.dd>=now).sort((a,b)=>a.dd-b.dd).slice(0,6);
+  document.getElementById('upcoming-tasks').innerHTML=upcoming.length?upcoming.map(t=>{
+    const days=Math.ceil((t.dd-now)/86400000);const urg=days<=7?'badge-red':days<=14?'badge-orange':'badge-blue';
+    return`<div class="flex-between" style="padding:.5rem 0;border-bottom:1px solid var(--border)">
+      <div><div style="font-weight:700;font-size:14px;font-family:sans-serif">${t.name}</div>
+      <div style="display:flex;align-items:center;gap:4px;margin-top:2px">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}<span class="text-sm text-muted" style="margin-left:4px">${(t.assignees||[]).join(', ')||'—'}</span></div></div>
+      <span class="badge ${urg}">${days}d left</span>
+    </div>`;
+  }).join(''):'<div class="text-sm text-muted italic">All done — you\'re on track! 🎉</div>';
+}
+
+// INIT
+load();
+seedIfEmpty();
+if(S.coverImg){document.getElementById('coverImg').src=S.coverImg;document.getElementById('coverWrap').style.display='block';}
+if(S.familyImg){
+  const imgEl=document.getElementById('familyPhoto');
+  imgEl.src=S.familyImg;imgEl.style.display='block';
+  document.getElementById('familyPhotoHint').style.display='none';
+  imgEl.onload=()=>cropFaces(imgEl);
+}
+renderDashboard();renderTasks();syncCatSelects();renderCalendar();renderEvents();renderBudget();renderFamilyGrid();
+</script>
+</body>
+</html>
