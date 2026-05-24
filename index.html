@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Varshini weds Mukesh 💍</title>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -353,11 +355,53 @@ label{font-size:13px;font-weight:700;color:var(--text2);font-family:sans-serif;d
 
 <script>
 // ══════════════════════════════════════
-// JSONBIN CONFIG — free real-time sync
+// FIREBASE REALTIME DATABASE SYNC
 // ══════════════════════════════════════
-const BIN_KEY='$2a$10$placeholder'; // will be set after bin creation
-let BIN_ID='';
-const MASTER_KEY='$2a$10$VarshiniMukeshWedding2026SecretKey';
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyCmoi9w7Ll0BveHWOk4stHzFmUFSJXnrhk",
+  authDomain:"varshini-mukesh-wedding.firebaseapp.com",
+  databaseURL:"https://varshini-mukesh-wedding-default-rtdb.firebaseio.com",
+  projectId:"varshini-mukesh-wedding",
+  storageBucket:"varshini-mukesh-wedding.firebasestorage.app",
+  messagingSenderId:"70133493097",
+  appId:"1:70133493097:web:d4579d41cd4aec7f9ba1f8"
+};
+
+// Initialize Firebase using CDN globals
+let firebaseApp,firebaseDB;
+function initFirebase(){
+  try{
+    firebaseApp=firebase.initializeApp(FIREBASE_CONFIG);
+    firebaseDB=firebase.database();
+    firebaseDB.ref('.info/connected').on('value',snap=>{
+      setSyncStatus(snap.val()?'live':'saving');
+    });
+    return true;
+  }catch(e){console.error('Firebase init failed:',e);return false;}
+}
+
+function fbWrite(path,data){
+  if(!firebaseDB)return;
+  setSyncStatus('saving');
+  firebaseDB.ref(path).set(data)
+    .then(()=>setSyncStatus('live'))
+    .catch(e=>{console.error(e);setSyncStatus('error');});
+}
+
+function startListening(){
+  if(!firebaseDB)return;
+  firebaseDB.ref('wedding').on('value',snap=>{
+    const d=snap.val();
+    if(!d)return;
+    if(d.categories)S.categories=Object.values(d.categories);
+    if(d.tasks)S.tasks=Object.values(d.tasks);
+    if(d.discussions)S.discussions=Object.values(d.discussions);
+    if(d.events)S.events=Object.values(d.events);
+    if(d.photos){Object.assign(faceDataURLs,d.photos);}
+    renderAll();
+    setSyncStatus('live');
+  });
+}
 
 // ══════════════════════════════════════
 // FAMILY
@@ -933,11 +977,23 @@ function renderAll(){renderDashboard();renderTasks();renderDiscussions();renderE
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+let S={categories:[],tasks:[],discussions:[],events:[]};
+function loadLocal(){try{const d=localStorage.getItem('vmwed26v2');if(d){S=JSON.parse(d);return true;}}catch(e){}return false;}
+function saveLocal(){try{localStorage.setItem('vmwed26v2',JSON.stringify(S));}catch(e){}}
+function seedIfEmpty(){
+  if(!S.categories.length)S.categories=[...SEED_CATEGORIES];
+  if(!S.tasks.length)S.tasks=[...SEED_TASKS];
+  if(!S.events.length)S.events=[...SEED_EVENTS];
+  saveLocal();
+}
 loadLocal();
 seedIfEmpty();
 loadStoredPhotos();
-setSyncStatus('live','Loaded');
 renderAll();
+setSyncStatus('saving');
 startPolling();
 </script>
 </body>
