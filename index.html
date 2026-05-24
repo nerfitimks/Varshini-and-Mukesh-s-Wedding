@@ -375,7 +375,7 @@ const FAMILY=[
   {name:'Santhanu',     role:"Groom's Brother-in-Law",  color:'#4B5563'},
   {name:'Nilan',        role:"Groom's Nephew",          color:'#065F46'},
 ];
-const ASSIGNEES=FAMILY.map(f=>f.name);
+const ASSIGNEES=['Varshini','Mukesh','Varshini Amma','Varshini Appa','Ajeetha','Sivakumar','Ajay','Shanma','Pavithra','Santhanu','Nilan'];
 const faceDataURLs={};
 
 function getAvatar(name){
@@ -391,14 +391,44 @@ function uploadMemberPhoto(name,input){
   const r=new FileReader();
   r.onload=ev=>{
     faceDataURLs[name]=ev.target.result;
-    // persist to localStorage
+    // Save to localStorage immediately
     try{const stored=JSON.parse(localStorage.getItem('vmwed_photos')||'{}');stored[name]=ev.target.result;localStorage.setItem('vmwed_photos',JSON.stringify(stored));}catch(e){}
+    // Push photos to cloud so everyone sees them
+    pushPhotosToCloud();
     renderFamilyGrid();renderTasks();renderDashboard();
   };r.readAsDataURL(f);
 }
 
 function loadStoredPhotos(){
   try{const stored=JSON.parse(localStorage.getItem('vmwed_photos')||'{}');Object.assign(faceDataURLs,stored);}catch(e){}
+}
+
+async function pushPhotosToCloud(){
+  try{
+    const photoBinId=localStorage.getItem('vmwed_photo_bin');
+    const payload=JSON.stringify(faceDataURLs);
+    if(!photoBinId){
+      const res=await fetch(JSONBIN_URL,{method:'POST',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY,'X-Bin-Name':'VarshiniMukeshPhotos'},body:payload});
+      const d=await res.json();
+      if(d.metadata&&d.metadata.id)localStorage.setItem('vmwed_photo_bin',d.metadata.id);
+    } else {
+      await fetch(`${JSONBIN_URL}/${photoBinId}`,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},body:payload});
+    }
+  }catch(e){console.log('Photo sync failed, saved locally only');}
+}
+
+async function pullPhotosFromCloud(){
+  try{
+    const photoBinId=localStorage.getItem('vmwed_photo_bin');
+    if(!photoBinId)return;
+    const res=await fetch(`${JSONBIN_URL}/${photoBinId}/latest`,{headers:{'X-Master-Key':JSONBIN_API_KEY}});
+    const d=await res.json();
+    if(d.record&&typeof d.record==='object'){
+      Object.assign(faceDataURLs,d.record);
+      try{localStorage.setItem('vmwed_photos',JSON.stringify(faceDataURLs));}catch(e){}
+      renderFamilyGrid();renderTasks();renderDashboard();
+    }
+  }catch(e){}
 }
 
 function renderFamilyGrid(){
@@ -559,7 +589,8 @@ function schedSave(){
 // Poll every 15 seconds for changes from others
 function startPolling(){
   pullFromCloud();
-  syncInterval=setInterval(pullFromCloud,15000);
+  pullPhotosFromCloud();
+  syncInterval=setInterval(()=>{pullFromCloud();pullPhotosFromCloud();},15000);
 }
 
 // ══════════════════════════════════════
