@@ -696,7 +696,9 @@ function renderTasks(){
       tasks.map(t=>`<tr class="${t.status==='Done'?'done':''}">
         <td style="max-width:200px;">${t.name}</td>
         <td><div style="display:inline-flex;flex-wrap:wrap;gap:2px;">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}</div><div style="font-size:10px;color:var(--text3);margin-top:2px;">${(t.assignees||[]).join(', ')||'—'}</div></td>
-        <td>${fmtDate(t.due)}</td><td>${fmt(t.budget)}</td><td>${fmt(t.actual)}</td>
+        <td>${fmtDate(t.due)}</td>
+        <td><input type="number" value="${t.budget||0}" style="width:90px;padding:3px 5px;font-size:12px;border:1.5px solid var(--border);border-radius:6px;" onchange="updateBudgetField('${t.id}','budget',this.value)" onclick="this.select()"/></td>
+        <td><input type="number" value="${t.actual||0}" style="width:90px;padding:3px 5px;font-size:12px;border:1.5px solid var(--gold);border-radius:6px;background:#FFFBF0;" onchange="updateBudgetField('${t.id}','actual',this.value)" onclick="this.select()"/></td>
         <td>${t.budget?(t.actual<=t.budget?`<span class="under-label">${fmt(t.budget-t.actual)}</span>`:`<span class="ovr-label">+${fmt(t.actual-t.budget)}</span>`):'—'}</td>
         <td><span class="badge ${sbadge(t.status)}">${t.status}</span></td>
         <td><div class="gap-r"><button class="btn btn-outline btn-sm" onclick="openEditTask('${t.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteTask('${t.id}')">🗑</button></div>${t.remarks?`<div style="font-size:10px;color:var(--text3);margin-top:3px;">${t.remarks}</div>`:''}</td>
@@ -704,7 +706,11 @@ function renderTasks(){
     return`<div class="card" style="padding:0;overflow:hidden;margin-bottom:1.25rem;">
       <div class="cat-header" onclick="toggleCat('cb-${cat.id}')">
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><span class="cat-title">📂 ${cat.name}</span>${vb}</div>
-        <div class="cat-stats"><span class="cat-stat">Budget: ${fmt(budget)}</span><span class="cat-stat">Paid: ${fmt(totalA)}</span><span class="cat-stat">${done}/${tasks.length} done</span><span>▼</span></div>
+        <div class="cat-stats">
+          <span class="cat-stat">Budget: <input type="number" value="${budget}" style="width:90px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:5px;color:#FFF;font-size:12px;padding:1px 4px;font-family:sans-serif;" onchange="updateCatBudget('${cat.id}',this.value)" onclick="event.stopPropagation();this.select()"/></span>
+          <span class="cat-stat">Paid: ${fmt(totalA)}</span>
+          <span class="cat-stat">${done}/${tasks.length} done</span><span>▼</span>
+        </div>
       </div>
       <div id="cb-${cat.id}" style="padding:1rem;">
         <div class="scroll-x"><table class="task-table">
@@ -853,7 +859,9 @@ function renderBudget(){
       <div class="scroll-x" style="margin-top:.5rem;"><table class="task-table">
         <thead><tr><th>Task</th><th>Assignees</th><th>Budget</th><th>Actual</th><th>Variance</th><th>Status</th></tr></thead>
         <tbody>${!tasks.length?'<tr><td colspan="6" style="text-align:center;color:var(--text3);font-style:italic;">No tasks</td></tr>':
-          tasks.map(t=>`<tr><td>${t.name}</td><td><div style="display:inline-flex;gap:2px;">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}</div></td><td>${fmt(t.budget)}</td><td>${fmt(t.actual)}</td>
+          tasks.map(t=>`<tr><td>${t.name}</td><td><div style="display:inline-flex;gap:2px;">${(t.assignees||[]).map(a=>getAvatar(a)).join('')}</div></td>
+            <td><input type="number" value="${t.budget||0}" style="width:90px;padding:3px 5px;font-size:12px;border:1.5px solid var(--border);border-radius:6px;" onchange="updateBudgetField('${t.id}','budget',this.value)" onclick="this.select()"/></td>
+            <td><input type="number" value="${t.actual||0}" style="width:90px;padding:3px 5px;font-size:12px;border:1.5px solid var(--gold);border-radius:6px;background:#FFFBF0;" onchange="updateBudgetField('${t.id}','actual',this.value)" onclick="this.select()"/></td>
             <td>${t.budget?(t.actual<=t.budget?`<span class="under-label">${fmt(t.budget-t.actual)}</span>`:`<span class="ovr-label">+${fmt(t.actual-t.budget)}</span>`):'—'}</td>
             <td><span class="badge ${sbadge(t.status)}">${t.status}</span></td></tr>`).join('')}
         </tbody></table></div>
@@ -891,6 +899,18 @@ function renderDashboard(){
       <span class="badge ${urg}">${days}d left</span>
     </div>`;
   }).join(''):'<div style="font-size:13px;color:var(--text3);font-style:italic;">All on track! 🎉</div>';
+}
+
+function updateBudgetField(taskId, field, value){
+  const t=S.tasks.find(x=>x.id===taskId);if(!t)return;
+  t[field]=parseFloat(value)||0;
+  fbSave(`tasks/${taskId}`,t);
+}
+
+function updateCatBudget(catId, value){
+  const c=S.categories.find(x=>x.id===catId);if(!c)return;
+  c.budget=parseFloat(value)||0;
+  fbSave(`categories/${catId}`,c);
 }
 
 function renderAll(){
